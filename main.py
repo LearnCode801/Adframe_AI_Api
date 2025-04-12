@@ -42,3 +42,5 @@ async def analyze_real_estate_ad(data: Dict[str, Any] = Body(...)):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+# the code running perfactly in the local
