@@ -12,7 +12,7 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 load_dotenv()
-gemini_api_key = os.getenv("API_KEY")
+gemini_api_key = os.getenv("gemini_api_key")
 
 # Base Property Features Model
 class PropertyFeatures(BaseModel):
@@ -105,7 +105,9 @@ class RealEstateFeatureExtractor:
     def __init__(self, api_key):
         genai.configure(api_key=gemini_api_key)
         self.llm = GoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=api_key, temperature=0)
+        print("\n\nLLM Done!!\n")
         self.setup_chains()
+        print("\n\nSetup_chains Done!!\n")
     
     def setup_chains(self):
         # Property type determination chain template
@@ -662,7 +664,7 @@ class RealEstateFeatureExtractor:
             }
 
 # API endpoint function
-def process_real_estate_ad(user_input, api_key):
-    extractor = RealEstateFeatureExtractor(api_key)
+def process_real_estate_ad(user_input):
+    extractor = RealEstateFeatureExtractor(gemini_api_key)
     result = extractor.process_input(user_input)
     return result

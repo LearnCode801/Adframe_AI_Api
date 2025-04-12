@@ -1,8 +1,9 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Optional
-import json
-
+import sys
+import os
+from typing import Dict, Any
 # Import the processor module
 from processor import process_real_estate_ad
 
@@ -10,19 +11,25 @@ app = FastAPI(title="Real Estate Ad Processor API")
 
 class RealEstateAdRequest(BaseModel):
     user_input: str
-    api_key: str
 
 @app.get("/")
 async def root():
     return {"message": "Welcome to Real Estate Ad Processor API. Use POST /process-ad to analyze real estate listings."}
 
 @app.post("/process-ad")
-async def analyze_real_estate_ad(request: RealEstateAdRequest):
+async def analyze_real_estate_ad(data: Dict[str, Any] = Body(...)):
     try:
-        if not request.user_input or not request.api_key:
-            raise HTTPException(status_code=400, detail="Both user_input and api_key are required")
+        if not data:
+            raise HTTPException(status_code=400, detail="JSON data required")
         
-        result = process_real_estate_ad(request.user_input, request.api_key)
+        print("\n\n=============================================")
+        print(type(data))
+        print(data)
+        
+        print("==================================")
+        
+        # Pass the JSON data directly to your processor
+        result = process_real_estate_ad(data)
         
         # Check if there was an error
         if "error" in result and not any(result[key] for key in result if key != "error"):
