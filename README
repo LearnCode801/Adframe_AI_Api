@@ -1,0 +1,86 @@
+# Real Estate Ad Processor API
+
+This API processes real estate ad text to extract structured information about property features, contact information, and image requirements for the listing.
+
+## Endpoints
+
+### GET /
+
+Returns a welcome message and basic usage instructions.
+
+### POST /process-ad
+
+Processes a real estate ad text input and returns structured property data.
+
+#### Request Body
+
+```json
+{
+  "user_input": "Your real estate ad text here...",
+  "api_key": "your-google-ai-api-key"
+}
+```
+
+#### Response
+
+```json
+{
+  "property_type_info": {
+    "main_category": "Residential",
+    "sub_category": "single-family home",
+    "property_description": "A description of the property"
+  },
+  "property_features": {
+    "property_type": "house",
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "square_footage": 2400,
+    "year_built": 1890,
+    "address": "789 Old County Road, Bridgewater, VT",
+    "amenities": ["wrap-around porch", "wood-burning fireplaces"],
+    "lot_size": "25 acres"
+  },
+  "contact_info": {
+    "name": "Robert Miller",
+    "phone": "802-555-6789",
+    "email": "rob@greenmountainrealty.com",
+    "company": "Green Mountain Realty",
+    "website": "www.greenmountainrealty.com",
+    "office_address": "45 Central Street, Woodstock, VT",
+    "available_hours": "9am-5pm"
+  },
+  "image_requirements": {
+    "exterior": true,
+    "living_room": true,
+    "kitchen": true,
+    "bedrooms": true,
+    "bathrooms": true,
+    "backyard": true,
+    "garage": true,
+    "barn": true,
+    "other_features": ["apple orchard", "pond"]
+  }
+}
+```
+
+## Deployment
+
+This API is designed to be deployed on Vercel. Follow these steps to deploy:
+
+1. Clone this repository
+2. Make sure you have the Vercel CLI installed: `npm i -g vercel`
+3. Run `vercel` in the project directory to deploy
+4. Use the provided URL to make requests to the API
+
+## Local Development
+
+To run the API locally:
+
+1. Install the required dependencies: `pip install -r requirements.txt`
+2. Run the server: `uvicorn main:app --reload`
+3. The API will be available at `http://localhost:8000`
+4. You can access the interactive API documentation at `http://localhost:8000/docs`
+
+## Environment Variables
+
+No environment variables are required for basic functionality. The Google AI API key is passed directly in the request.
